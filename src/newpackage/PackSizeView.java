@@ -7,6 +7,8 @@ package DogRecorder;
 import java.awt.Dimension;
 import javax.swing.*;
 import java.awt.event.*;
+import java.util.LinkedList;
+import java.util.Queue;
 
 
 /**
@@ -21,7 +23,10 @@ public class PackSizeView extends JPanel{
     JButton finished;
     boolean done;
     int finalSize;
-    public PackSizeView(){
+    LinkedList<Dog> dogsList;
+    DogQueue[] dogsQ;
+    public PackSizeView(LinkedList<Dog> dogs){
+       dogsList = dogs;
        size=new Dimension(299, 399);
        setPreferredSize(size);
        setSize(size);
@@ -54,16 +59,37 @@ public class PackSizeView extends JPanel{
            public void actionPerformed(ActionEvent e)
            {
               done = true;
-              //finalSize = packSize.;
+              Integer size = (Integer)packSize.getSelectedItem();
+              int numDogs = dogsList.size();
+              int packs = numDogs/size;
+              System.out.println("NumDogs: "+numDogs+"\nThe packSize"+packs);
+              dogsQ = new DogQueue[packs];
+              int count =0;
+              for(int i=0;i<dogsQ.length;i++){
+                  dogsQ[i] = new DogQueue(numDogs/packs);
+              }
+              for(int i=0;i<numDogs;i++){
+                  if(count<packs-1){
+                      count++;
+                  }else{
+                      count =0;
+                  }
+                  dogsQ[count].enqueue(dogsList.get(i));
+                  
+              }
+              
            }
        });
-    }
-    public int getPackSize()
-    {
-        return finalSize;
     }
     public boolean isDone()
     {
         return done;
+    }
+    public Integer getPackSize(){
+        Integer i = (Integer)packSize.getSelectedItem();
+        return i;
+    }
+    public DogQueue[] getPacks(){
+        return dogsQ;
     }
 }

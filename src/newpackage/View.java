@@ -14,13 +14,13 @@ import javax.swing.*;
 
 public class View extends JFrame implements ActionListener {
 
-    DogInsertionView view1;
+    DogInsertionView dogInput;
     Timer time;
     private JMenuBar menuBar;
     private JMenu file, help;
     private JMenuItem reset, exit, about;
     private boolean begin;
-    PackSizeView p = new PackSizeView();
+    PackSizeView packSizeView;
 
     public View() {
         
@@ -33,7 +33,7 @@ public class View extends JFrame implements ActionListener {
         reset = new JMenuItem("Reset");
         exit = new JMenuItem("Exit");
         about = new JMenuItem("About");
-
+        packSizeView = new PackSizeView(null);
         menuBar.add(file);
         menuBar.add(help);
         file.add(reset);
@@ -41,8 +41,8 @@ public class View extends JFrame implements ActionListener {
         file.add(exit);
         help.add(about);
         this.setTitle("Dog Recorder");
-        view1 = new DogInsertionView();
-        p = new PackSizeView();
+        dogInput = new DogInsertionView();
+        
 
         exit.addActionListener(new ActionListener() {
             @Override
@@ -64,7 +64,7 @@ public class View extends JFrame implements ActionListener {
                help.setTitle("HELP");
             }
         });
-        add(view1);
+        add(dogInput);
         pack();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setFocusable(true);
@@ -87,24 +87,26 @@ public class View extends JFrame implements ActionListener {
     }
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (view1.isChange()) {
-            this.remove(view1);
-            view1.falseChange();
-            this.add(p);
+        if (dogInput.isChange()) {
+            this.remove(dogInput);
+            packSizeView = new PackSizeView(dogInput.getDogs());
+            dogInput.falseChange();
+            this.add(packSizeView);
+            System.out.println(dogInput.getDogs().size());
             pack();
             
         }
-        if(p.isDone())
+        else if(packSizeView.isDone())
         {
-            this.remove(p);
-            this.add(new TrialView(view1.getDogs(), p.getPackSize()));
+            this.remove(packSizeView);
+            this.add(new TrialView(dogInput.getDogs(), packSizeView.getPackSize()));
             pack();
             
         }
         
         /*if(begin){
-          this.remove(p);
-          add(view1);
+          this.remove(packSizeView);
+          add(dogInput);
           pack();
           begin = false
           }*/
