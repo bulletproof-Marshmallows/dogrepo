@@ -2,11 +2,12 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package newpackage;
+package DogRecorder;
 
 /**
  *
  * @author Alvin
+ * modified by Draz
  */
 import java.awt.*;
 import java.awt.event.*;
@@ -14,6 +15,8 @@ import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
+
+
 
 public class DogInsertionView extends JPanel {
 
@@ -24,11 +27,12 @@ public class DogInsertionView extends JPanel {
     private String testText;
     private JFrame endView;
     private Boolean change;
+    private int entry;
     private LinkedList<Dog> dogsList;
 
     public DogInsertionView() {
         change = false;
-        dogsList = new LinkedList<>();
+        dogsList = new LinkedList<Dog>();
         input = new JTextField("Inset Dog Name Here.");
         instructions1 = new JLabel("Insert Dogs into text box and press \"ADD\".");
         instructions2 = new JLabel("To end press the \"END\" button");
@@ -36,6 +40,7 @@ public class DogInsertionView extends JPanel {
         add = new JButton("ADD");
         test = new JTextArea();
         testText = "";
+        entry = 1;
         setLayout(null);
         setPreferredSize(new Dimension(300, 400));
         setSize(new Dimension(300, 400));
@@ -66,14 +71,12 @@ public class DogInsertionView extends JPanel {
         no.setBounds(150, 50, 57, 25);
         endView.setSize(new Dimension(250, 150));
 
-
+        //Add dog into list with name and number 
         add.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (input.getText().equals(" ")){
-                    
-                }
-                dogsList.add(new Dog(input.getText(), (int) Math.random() * 10));
+                dogsList.add(new Dog(input.getText(), entry));
+                entry++;
                 testText = "";
                 for (int i = 0; i < dogsList.size(); i++) {
                     testText += dogsList.get(i).getName() + "\n";
@@ -83,6 +86,7 @@ public class DogInsertionView extends JPanel {
 
             }
         });
+        //Opens confirmation window
         end.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -111,8 +115,17 @@ public class DogInsertionView extends JPanel {
         input.selectAll();
     }
 
-    public Boolean isChange() {
+    public boolean isChange() {
         return change;
+    }
+    public void falseChange()
+    {
+        change = false;
+    }
+    
+    public LinkedList<Dog> getDogs()
+    {
+        return dogsList;
     }
  
 }

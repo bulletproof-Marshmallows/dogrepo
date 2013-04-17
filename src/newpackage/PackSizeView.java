@@ -2,20 +2,25 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package newpackage;
+package DogRecorder;
 
 import java.awt.Dimension;
 import javax.swing.*;
+import java.awt.event.*;
+
 
 /**
  *
  * @author Alvin
+ * modified by Draz
  */
 public class PackSizeView extends JPanel{
     Dimension size;
     JComboBox packSize;
     JLabel SelPackSize,instruct1,instruct2;
     JButton finished;
+    boolean done;
+    int finalSize;
     public PackSizeView(){
        size=new Dimension(299, 399);
        setPreferredSize(size);
@@ -41,5 +46,24 @@ public class PackSizeView extends JPanel{
        instruct2.setBounds(50, 30, 200, 20);
        SelPackSize.setBounds(60,75,115,20);
        packSize.setBounds(175,75,50,20);
+       done = false;
+       finalSize = 3;
+       
+       finished.addActionListener(new ActionListener(){
+           @Override
+           public void actionPerformed(ActionEvent e)
+           {
+              done = true;
+              //finalSize = packSize.;
+           }
+       });
+    }
+    public int getPackSize()
+    {
+        return finalSize;
+    }
+    public boolean isDone()
+    {
+        return done;
     }
 }

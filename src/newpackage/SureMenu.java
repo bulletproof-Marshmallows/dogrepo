@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package newpackage;
+package DogRecorder;
 
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;

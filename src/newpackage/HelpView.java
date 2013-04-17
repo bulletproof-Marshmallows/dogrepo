@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package newpackage;
+package DogRecorder;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -29,7 +29,7 @@ public class HelpView extends JFrame {
         info.setBorder(BorderFactory.createRaisedBevelBorder());
         add(info);
         info.setEditable(false);
-        this.setIconImage(new ImageIcon(HelpView.class.getResource("/Icons/helpIcon.png")).getImage());
+        this.setIconImage(new ImageIcon(HelpView.class.getResource("helpIcon.png")).getImage());
         setSize(300, 300);
     }
     public void close(){

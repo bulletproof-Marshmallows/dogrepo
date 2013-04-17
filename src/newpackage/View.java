@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package newpackage;
+package DogRecorder;
 
 /**
  *
@@ -73,7 +73,7 @@ public class View extends JFrame implements ActionListener {
     }
 
     public void start() {
-        setIconImage(new ImageIcon(getClass().getResource("/Icons/beagle.png")).getImage());
+        setIconImage(new ImageIcon(getClass().getResource("beagle.png")).getImage());
         setVisible(true);
         setResizable(false);
     }
@@ -89,16 +89,25 @@ public class View extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (view1.isChange()) {
             this.remove(view1);
-            this.add(new PackSizeView());
+            view1.falseChange();
+            this.add(p);
             pack();
+            
         }
+        if(p.isDone())
+        {
+            this.remove(p);
+            this.add(new TrialView(view1.getDogs(), p.getPackSize()));
+            pack();
+            
+        }
+        
         /*if(begin){
-         * this.remove(p);
-         * add(view1);
-         * pack();
-         * begin = false;
-         * }*/
-
+          this.remove(p);
+          add(view1);
+          pack();
+          begin = false
+          }*/
     }
     
 }
