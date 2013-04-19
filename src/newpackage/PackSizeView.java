@@ -62,7 +62,6 @@ public class PackSizeView extends JPanel{
               Integer size = (Integer)packSize.getSelectedItem();
               int numDogs = dogsList.size();
               int packs = numDogs/size;
-              System.out.println("NumDogs: "+numDogs+"\nThe packSize"+packs);
               dogsQ = new DogQueue[packs];
               int count =0;
               for(int i=0;i<dogsQ.length;i++){
@@ -76,7 +75,7 @@ public class PackSizeView extends JPanel{
                   }
                   dogsQ[count].enqueue(dogsList.get(i));
                   
-              }
+              }      
               
            }
        });

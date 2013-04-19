@@ -1,35 +1,50 @@
 
 package DogRecorder;
-import java.util.Stack;
+import java.util.ArrayList;
 /**
  *
  * @author Draz
  */
 public class DogQueue{
     int queueSize;
-    Stack<Dog> dogQ;
+    ArrayList<Dog> dogQ;
+    Exception QueueFull;
     
     public DogQueue(int size)
     {
         queueSize = size;
-        dogQ = new Stack();
-        
+        dogQ = new ArrayList();
+        QueueFull = new Exception("Queue is full");
     }
-    public void enqueue(Dog val)
+    public void enqueue(Dog val) 
     {
         if(dogQ.size() < queueSize) {
             dogQ.add(val);
         }
         else {
-            System.out.println("This queue is full");
+            System.out.println("Full");
+            //throw QueueFull;
         }
     }
     public Dog dequeue()
     {
-        return dogQ.pop();
+        return dogQ.remove(0);
     }
     public Dog front()
     {
-        return dogQ.peek();
+        return dogQ.get(0);
+    }
+    
+    public int size(){
+        return dogQ.size();
+    }
+    
+    @Override
+    public String toString(){
+        String string ="";
+        for(int i=0;i<dogQ.size();i++){
+            string+=dogQ.get(i).getName()+" ";
+        }
+        return string;
     }
 }

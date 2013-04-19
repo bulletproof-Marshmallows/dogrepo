@@ -32,7 +32,7 @@ public class DogInsertionView extends JPanel {
 
     public DogInsertionView() {
         change = false;
-        dogsList = new LinkedList<Dog>();
+        dogsList = new LinkedList();
         input = new JTextField("Inset Dog Name Here.");
         instructions1 = new JLabel("Insert Dogs into text box and press \"ADD\".");
         instructions2 = new JLabel("To end press the \"END\" button");
@@ -112,7 +112,7 @@ public class DogInsertionView extends JPanel {
         test.setBorder(BorderFactory.createRaisedBevelBorder());
         test.setBounds(30, 90, 250, 300);
         test.setEditable(false);
-        input.selectAll();
+        
     }
 
     public boolean isChange() {

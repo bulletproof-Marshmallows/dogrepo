@@ -20,10 +20,11 @@ public class View extends JFrame implements ActionListener {
     private JMenu file, help;
     private JMenuItem reset, exit, about;
     private boolean begin;
+    private boolean trial;
     PackSizeView packSizeView;
 
     public View() {
-        
+        trial =false;
         begin = false;
         menuBar = new JMenuBar();
         this.setJMenuBar(menuBar);
@@ -92,16 +93,17 @@ public class View extends JFrame implements ActionListener {
             packSizeView = new PackSizeView(dogInput.getDogs());
             dogInput.falseChange();
             this.add(packSizeView);
-            System.out.println(dogInput.getDogs().size());
             pack();
             
         }
-        else if(packSizeView.isDone())
+        else if(packSizeView.isDone()&& !trial)
         {
             this.remove(packSizeView);
-            this.add(new TrialView(dogInput.getDogs(), packSizeView.getPackSize()));
-            pack();
+            //this.add(new TrialView(dogInput.getDogs(), packSizeView.getPackSize()));
             
+            this.add(new AlvinTrialView(packSizeView.getPacks()[1]));
+            pack();
+            trial = true;
         }
         
         /*if(begin){
