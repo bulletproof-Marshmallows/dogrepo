@@ -21,11 +21,15 @@ public class View extends JFrame implements ActionListener {
     private JMenuItem reset, exit, about;
     private boolean begin;
     private boolean trial;
+    boolean win;
     PackSizeView packSizeView;
+    AlvinTrialView trialview;
 
     public View() {
+        trialview = new AlvinTrialView();
         trial =false;
         begin = false;
+        win =false;
         menuBar = new JMenuBar();
         this.setJMenuBar(menuBar);
         file = new JMenu("File");
@@ -100,12 +104,19 @@ public class View extends JFrame implements ActionListener {
         {
             this.remove(packSizeView);
             //this.add(new TrialView(dogInput.getDogs(), packSizeView.getPackSize()));
-            
-            this.add(new AlvinTrialView(packSizeView.getPacks()));
+            trialview =new AlvinTrialView(packSizeView.getPacks());
+            this.add(trialview);
             pack();
             trial = true;
         }
-        
+        else if(trialview.isDone() && !win){
+            Dog d = trialview.getWinner();
+            this.remove(trialview);
+            this.add(new WinnersView(d));
+            win = true;
+            pack();
+            win =true;
+        }
         
     }
     

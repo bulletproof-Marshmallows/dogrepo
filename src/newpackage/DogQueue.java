@@ -10,8 +10,10 @@ public class DogQueue{
     ArrayList<Dog> dogQ;
     Exception QueueFull;
     private boolean sizeSet;
+    boolean full;
     public DogQueue(int size)
     {
+        full =false;
         queueSize = size;
         dogQ = new ArrayList();
         QueueFull = new Exception("Queue is full");
@@ -26,6 +28,9 @@ public class DogQueue{
         if(sizeSet) {
             if(dogQ.size() < queueSize) {
                 dogQ.add(val);
+                if(dogQ.size() >= queueSize){
+                    full =true;
+                }
             }
             else {
                 System.out.println("Full");
@@ -46,6 +51,12 @@ public class DogQueue{
     
     public int size(){
         return dogQ.size();
+    }
+    public boolean isFull(){
+        return full;
+    }
+    public boolean isEmpty(){
+        return dogQ.isEmpty();
     }
     
     @Override

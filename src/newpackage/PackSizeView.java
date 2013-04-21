@@ -62,22 +62,26 @@ public class PackSizeView extends JPanel{
               Integer size = (Integer)packSize.getSelectedItem();
               //Converts the selected Object as integer size
               int numDogs = dogsList.size();
-              int packs = numDogs/size;
+              int packs=0;
+              
+              if(numDogs%size ==0) {
+                   packs = numDogs/size;
+               }else{
+                  packs = (numDogs/size)+1;
+              }
               //the number of packs are the number of dogs / the size
               dogsQ = new DogQueue[packs];
               
               int count =0;
               for(int i=0;i<dogsQ.length;i++){
-                  dogsQ[i] = new DogQueue(numDogs/packs);
+                  dogsQ[i] = new DogQueue(size);
               }
               for(int i=0;i<numDogs;i++){
-                  if(count<packs-1){
+                  if(dogsQ[count].isFull()){
                       count++;
-                  }else{
-                      count =0;
                   }
                   dogsQ[count].enqueue(dogsList.get(i));
-                  
+                  System.out.println("Queue"+count+dogsQ[count]);
               }      
               
            }

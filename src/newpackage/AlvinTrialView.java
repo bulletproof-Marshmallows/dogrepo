@@ -25,9 +25,15 @@ public class AlvinTrialView extends JPanel {
     private int packCount;
     private DogQueue winners;
     private ArrayList<Dog> dogs;
-    private int buttonCount;
+    private int buttonCount,packSize;
+    private boolean done;
+    
+    public AlvinTrialView(){
+        done =false;
+    }
 
     public AlvinTrialView(DogQueue[] q) {
+        done =false;
         setSize(400, 400);
         setPreferredSize(new Dimension(300, 300));
         setLayout(new GridLayout(1, 2));
@@ -35,6 +41,7 @@ public class AlvinTrialView extends JPanel {
         winners = new DogQueue();
         //gets the alotted dogQueue
         dogQ = q;
+        packSize = q.length;
         //list to hold the buttons to decide the winner as well as the text fields that 
         radioButtonList = new ArrayList();
         textList = new ArrayList();
@@ -43,13 +50,14 @@ public class AlvinTrialView extends JPanel {
         int count = dogQ[packCount].size();
         //loops to find the number of rowss and adds the objects accordingly
         for (int i = 0; i < count; i++) {
-            
-                temp = dogQ[packCount].dequeue();
-                dogs.add(temp);
-                radioButtonList.add(new JRadioButton("Winner?"));
-                textList.add(new JTextField("Dog" + temp.getNumber() + " " + temp.getName()));
-                rows++;
-            
+
+            temp = dogQ[packCount].dequeue();
+            dogs.add(temp);
+            radioButtonList.add(new JRadioButton("Winner?"));
+            textList.add(new JTextField("Dog" + temp.getNumber() + " " + temp.getName()));
+            textList.get(i).setEditable(false);
+            rows++;
+
         }
         //grid layout for the process of morphing if more buttons than the normal size can fit
         buttonLayout = new GridLayout(rows, 1);
@@ -105,13 +113,14 @@ public class AlvinTrialView extends JPanel {
         int count = dogQ[packCount].size();
         //loops to find the number of rowss and adds the objects accordingly
         for (int i = 0; i < count; i++) {
-            
-                temp = dogQ[packCount].dequeue();
-                dogs.add(temp);
-                radioButtonList.add(new JRadioButton("Winner?"));
-                textList.add(new JTextField("Dog" + temp.getNumber() + " " + temp.getName()));
-                rows++;
-            
+
+            temp = dogQ[packCount].dequeue();
+            dogs.add(temp);
+            radioButtonList.add(new JRadioButton("Winner?"));
+            textList.add(new JTextField("Dog" + temp.getNumber() + " " + temp.getName()));
+            textList.get(i).setEditable(false);
+            rows++;
+
         }
         //grid layout for the process of morphing if more buttons than the normal size can fit
         buttonLayout = new GridLayout(rows, 1);
@@ -127,6 +136,8 @@ public class AlvinTrialView extends JPanel {
         add(textPanel);
         this.revalidate();
         buttonCount = 0;
+        System.out.println("Winners Queue Size"+winners.size());
+        System.out.println("DogQ: "+dogQ.length);
         for (int o = 0; o < radioButtonList.size(); o++) {
             radioButtonList.get(o).addActionListener(new ActionListener() {
                 @Override
@@ -143,6 +154,33 @@ public class AlvinTrialView extends JPanel {
                     System.out.println(winners.toString() + "Enqueued");
                     if (packCount < dogQ.length) {
                         continueTrial();
+                    } else {
+                        dogQ = new DogQueue[winners.size() / packCount];
+                        int packs = winners.size() / packCount;
+                        int counter = 0;
+                        int wins = winners.size();
+
+                        for (int i = 0; i < dogQ.length; i++) {
+                            dogQ[i] = new DogQueue();
+                        }
+
+                        for (int i = 0; i < wins; i++) {
+                            if (counter < packs && counter != 0) {
+                                counter++;
+                            } else {
+                                counter = 0;
+                            }
+                            dogQ[counter].enqueue(winners.dequeue());
+                        }
+                        
+                        packCount = 0;
+                        if (dogQ.length-1 == 0 && radioButtonList.size() == 1 && winners.isEmpty()) {
+                            System.out.println("Winner is " + dogQ[0].front().getName());
+                            done=true;
+                            
+                        } else {
+                            continueTrial();
+                        }
                     }
                 }
             });
@@ -150,5 +188,17 @@ public class AlvinTrialView extends JPanel {
             buttonCount++;
         }
 
+    }
+
+    /**
+     * @return the done
+     */
+    public boolean isDone() {
+        return done;
+    }
+    public Dog getWinner(){
+       Dog dog=dogQ[0].front();
+       
+       return dog;
     }
 }
