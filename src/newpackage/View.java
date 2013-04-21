@@ -101,17 +101,12 @@ public class View extends JFrame implements ActionListener {
             this.remove(packSizeView);
             //this.add(new TrialView(dogInput.getDogs(), packSizeView.getPackSize()));
             
-            this.add(new AlvinTrialView(packSizeView.getPacks()[1]));
+            this.add(new AlvinTrialView(packSizeView.getPacks()));
             pack();
             trial = true;
         }
         
-        /*if(begin){
-          this.remove(packSizeView);
-          add(dogInput);
-          pack();
-          begin = false
-          }*/
+        
     }
     
 }
